@@ -11,25 +11,32 @@ class ServiceEntity {
       x: '',
       y: '',
       url: '$polUrl=316898&y=164368&z=19&scale=1&lang=ru_RU');
+  int _zoom = 19;
 
+  set zoom(int value) => _zoom = _chekZoom(value);
   set latitude(String value) => _modelEntity.latitude = value;
   set longitude(String value) => _modelEntity.longitude = value;
+  int get zoom => _zoom;
   String get x => _modelEntity.x;
   String get y => _modelEntity.y;
   String get latitude => _modelEntity.latitude;
   String get longitude => _modelEntity.longitude;
   String get url => _modelEntity.url;
 
+  int _chekZoom(int value) {
+    if (value < 10) {
+      return 10;
+    }
+    if (value > 25) {
+      return 25;
+    } else {
+      return value;
+    }
+  }
+
   void _upDateUrlXY() {
     double latitude = double.parse(_modelEntity.latitude);
     double longitude = double.parse(_modelEntity.longitude);
-
-    // double latitude = 55.77622157662021;
-    // double longitude = 37.62883299205377;
-
-    // double latitude = 55.750626;
-    // double longitude = 37.597664;
-    int zoom = 19;
 
     String ur =
         _computeUrlXY(funclat: latitude, funclon: longitude, zoom: zoom);
@@ -40,10 +47,10 @@ class ServiceEntity {
     double dataLatitude = double.parse(latitude);
     double dataLongitude = double.parse(longitude);
 
-    if (dataLatitude < 54 ||
-        dataLatitude > 56 ||
-        dataLongitude < 36 ||
-        dataLongitude > 38) {
+    if (dataLatitude < -90 ||
+        dataLatitude > 90 ||
+        dataLongitude < -180 ||
+        dataLongitude > 180) {
       return false;
     } else {
       _upDateUrlXY();
@@ -64,7 +71,7 @@ class ServiceEntity {
     int resY = cacheY.floor();
     _modelEntity.x = resX.toString();
     _modelEntity.y = resY.toString();
-    String getU = 'x=$resX&y=$resY&z=19&scale=1&lang=ru_RU';
+    String getU = 'x=$resX&y=$resY&z=$zoom&scale=1&lang=ru_RU';
     return '$polUrl$getU';
   }
 }

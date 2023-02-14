@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'maps_screen_cubit/maps_screen_cubit.dart';
 
 class MistakeWidgetResult extends StatelessWidget {
   const MistakeWidgetResult({super.key});
@@ -12,11 +10,14 @@ class MistakeWidgetResult extends StatelessWidget {
 }
 
 class InfoWidgetResult extends StatelessWidget {
-  const InfoWidgetResult({super.key});
+  final String x;
+  final String y;
+  final String url;
 
+  const InfoWidgetResult(
+      {super.key, required this.x, required this.y, required this.url});
   @override
   Widget build(BuildContext context) {
-    final infoCubit = context.watch<ModelCubit>().state;
     return Card(
       child: Column(
         children: [
@@ -24,13 +25,13 @@ class InfoWidgetResult extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('координаты X'),
-              Text(infoCubit.x),
+              Text(x),
               const Text('координаты Y'),
-              Text(infoCubit.y),
+              Text(y),
             ],
           ),
           Image.network(
-            infoCubit.url,
+            url,
             width: 300,
             height: 200,
             errorBuilder: (context, error, stackTrace) {

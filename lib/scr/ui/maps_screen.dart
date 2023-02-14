@@ -48,18 +48,43 @@ class _MapScreenState extends State<MapScreen> {
                         const Text('долгота (longitude)',
                             style: TextStyle(color: Colors.blueAccent)),
                         TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) => infoCubit.setLongitude(value),
-                        ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) =>
+                                infoCubit.setLongitude(value)),
                       ],
                     ),
                   ),
                 ),
+                const SizedBox(width: 10),
+                Card(
+                  child: Column(
+                    children: [
+                      const Text('zoom'),
+                      Slider(
+                        min: 13,
+                        max: 23,
+                        divisions: 10,
+                        label: infoCubit.state.zoom.toString(),
+                        value: infoCubit.state.zoom.toDouble(),
+                        onChanged: infoCubit.state.zoomActive
+                            ? (va) {
+                                infoCubit.setZoom(va);
+                              }
+                            : null,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
                 ElevatedButton(
                     onPressed: infoCubit.getStateForInfo,
                     child: const Text('get tail')),
                 infoCubit.state.okData
-                    ? const InfoWidgetResult()
+                    ? InfoWidgetResult(
+                        x: infoCubit.state.x,
+                        y: infoCubit.state.y,
+                        url: infoCubit.state.url,
+                      )
                     : const MistakeWidgetResult(),
               ],
             ),

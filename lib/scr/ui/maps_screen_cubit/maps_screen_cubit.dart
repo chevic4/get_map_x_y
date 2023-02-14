@@ -4,7 +4,9 @@ import 'maps_screen_state.dart';
 
 class ModelCubit extends Cubit<ModelState> {
   final _serviceModel = ServiceEntity();
-  ModelCubit() : super(ModelState(okData: false, x: '', y: '', url: ''));
+  ModelCubit()
+      : super(ModelState(
+            okData: false, x: '', y: '', url: '', zoom: 19, zoomActive: false));
 
   Future<void> setLatitude(String valueX) async {
     _serviceModel.latitude = valueX;
@@ -14,13 +16,24 @@ class ModelCubit extends Cubit<ModelState> {
     _serviceModel.longitude = valueY;
   }
 
-  Future<void> getStateForInfo() async {
+  void setZoom(double valueZoom) {
+    _serviceModel.zoom = valueZoom.toInt();
+    getStateForInfo();
+  }
+
+  double getZoom() {
+    return _serviceModel.zoom.toDouble();
+  }
+
+  void getStateForInfo() {
     bool updateGood = _serviceModel.updateData();
     var newState = ModelState(
       okData: updateGood,
       x: _serviceModel.x,
       y: _serviceModel.y,
       url: _serviceModel.url,
+      zoom: _serviceModel.zoom,
+      zoomActive: true,
     );
     emit(newState);
   }
