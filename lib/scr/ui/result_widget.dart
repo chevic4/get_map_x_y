@@ -5,7 +5,7 @@ class MistakeWidgetResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('ошибка! введите координаты верно');
+    return const Text('вводите координаты верно!');
   }
 }
 

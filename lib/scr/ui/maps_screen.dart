@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test_yamap/scr/ui/result_widget.dart';
+import 'package:flutter_test_yamap/scr/ui/widgets/app_title_widget.dart';
+import 'package:flutter_test_yamap/scr/ui/widgets/link_button_map.dart';
 import 'maps_screen_cubit/maps_screen_cubit.dart';
 import 'maps_screen_cubit/maps_screen_state.dart';
 
@@ -23,13 +25,15 @@ class _MapScreenState extends State<MapScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                const AppTitleWidget(),
+                const ButtonLinkMap(),
                 Card(
                   elevation: 10,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        const Text('широта (latitude)',
+                        const Text('широта (latitude) (например: 55.774)',
                             style: TextStyle(color: Colors.blueAccent)),
                         TextField(
                           keyboardType: TextInputType.number,
@@ -45,7 +49,7 @@ class _MapScreenState extends State<MapScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        const Text('долгота (longitude)',
+                        const Text('долгота (longitude) (например: 37.601)',
                             style: TextStyle(color: Colors.blueAccent)),
                         TextField(
                             keyboardType: TextInputType.number,
@@ -76,9 +80,13 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
                 const SizedBox(width: 10),
-                ElevatedButton(
-                    onPressed: infoCubit.getStateForInfo,
-                    child: const Text('get tail')),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      onPressed: infoCubit.getStateForInfo,
+                      child: const Text('показать тайл парковки')),
+                ),
+                const AppExampleWidget(),
                 infoCubit.state.okData
                     ? InfoWidgetResult(
                         x: infoCubit.state.x,
